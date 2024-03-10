@@ -1,7 +1,10 @@
-import React from 'react'
+import styles from './footer.module.css'
 
 export const Footer = () => {
   return (
-    <footer>Footer</footer>
+    <footer className={styles.container}>
+      <div className={styles.logo}>Lamadev</div>
+      <div className={styles.text}>Some text</div>
+    </footer>
   )
 }

@@ -1,28 +1,61 @@
-import Link from 'next/link'
-import React from 'react'
+'use client'
+import { useState } from 'react';
+import styles from './links.module.css';
+import { NavLink } from './navLink/NavLink';
+import { logOutHandler } from '@/lib/action'
+import Image from 'next/image';
 
-export const Links = () => {
-  const links = [
-    {
-      title: 'Home',
-      path: '/',
-    },
-    {
-      title: 'About',
-      path: '/about',
-    },
-    {
-      title: 'Contacts',
-      path: '/contacts',
-    },
-    {
-      title: 'Blog',
-      path: '/blog',
-    }
-  ]
+const links = [
+  {
+    title: 'Home',
+    path: '/',
+  },
+  {
+    title: 'About',
+    path: '/about',
+  },
+  {
+    title: 'Contacts',
+    path: '/contacts',
+  },
+  {
+    title: 'Blog',
+    path: '/blog',
+  }
+];
+
+const isAdmin = true;
+
+export const Links = ({session}: {session: any}) => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <div>{links.map((link) => (
-      <Link href={link.path} title={link.title} key={link.path}>{link.title}</Link>
-    ))}</div>
+    <div className={styles.container}>
+      <div className={styles.links}>{links.map((link) => (
+        <NavLink link={link} key={link.path} />      
+      ))}
+      {session 
+        ? (<>
+          {isAdmin && (<NavLink link={{title:'Admin', path:'/admin'}} />)}
+          <form action={logOutHandler}>
+            <button className={styles.logout}>Logout</button>
+          </form>
+        </>)
+        :(<NavLink link={{title:'login', path:'/login'}} />) }
+      </div>
+      <button className={styles.burger} onClick={(() =>setOpen((prev) => !prev))}>
+        <Image src='/menu.png' alt='' width={30} height={30}/>
+      </button>
+      {open && <div className={styles.links_menu}>{links.map((link) => (
+        <NavLink link={link} key={link.path} />      
+      ))}
+      {session?.user 
+        ? (<>
+          {session.user?.isAdmin && (<NavLink link={{title:'Admin', path:'/admin'}} />)}
+          <button className={styles.logout}>Logout</button>
+        </>)
+        :(<NavLink link={{title:'login', path:'/login'}} />) }
+      </div>}
+    </div>
   )
 }

@@ -1,0 +1,12 @@
+.link {
+  min-width: 100px;
+  padding: 10px;
+  border-radius: 20px;
+  text-align: center;
+  background-color: var(--bg);
+}
+
+.active {
+  background-color: var(--text);
+  color: var(--bg);
+}

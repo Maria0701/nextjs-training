@@ -1,8 +1,17 @@
-import React from 'react';
+import { signIn} from '@/lib/auth';
 
-const LoginPage = () => {
+const LoginPage = async () => {
+  const githubLoginHandler = async () => {
+    'use server'
+    await signIn('github');
+  };
+
   return (
-    <div>LoginPage</div>
+    <div>
+      <form action={githubLoginHandler}>
+        <button>Login with GitHub</button>
+      </form>
+    </div>
   )
 };
 
