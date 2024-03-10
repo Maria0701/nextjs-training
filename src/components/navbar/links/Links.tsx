@@ -24,8 +24,6 @@ const links = [
   }
 ];
 
-const isAdmin = true;
-
 export const Links = ({session}: {session: any}) => {
   const [open, setOpen] = useState(false);
 
@@ -36,7 +34,7 @@ export const Links = ({session}: {session: any}) => {
       ))}
       {session 
         ? (<>
-          {isAdmin && (<NavLink link={{title:'Admin', path:'/admin'}} />)}
+          {session.user?.isAdmin && (<NavLink link={{title:'Admin', path:'/admin'}} />)}
           <form action={logOutHandler}>
             <button className={styles.logout}>Logout</button>
           </form>
@@ -51,7 +49,7 @@ export const Links = ({session}: {session: any}) => {
       ))}
       {session?.user 
         ? (<>
-          {session.user?.isAdmin && (<NavLink link={{title:'Admin', path:'/admin'}} />)}
+          {Boolean(session.user?.isAdmin) && (<NavLink link={{title:'Admin', path:'/admin'}} />)}
           <button className={styles.logout}>Logout</button>
         </>)
         :(<NavLink link={{title:'login', path:'/login'}} />) }

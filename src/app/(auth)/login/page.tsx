@@ -1,4 +1,6 @@
+import { LoginForm } from '@/components/loginForm/LoginForm';
 import { signIn} from '@/lib/auth';
+import styles from "./login.module.css";
 
 const LoginPage = async () => {
   const githubLoginHandler = async () => {
@@ -7,10 +9,13 @@ const LoginPage = async () => {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
+      <div className={styles.wrapper}>
+      <LoginForm />
       <form action={githubLoginHandler}>
-        <button>Login with GitHub</button>
+        <button className={styles.github}>Login with GitHub</button>
       </form>
+      </div>
     </div>
   )
 };
